@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Home, Search, User } from "lucide-react";
 import React from "react";
 import "./globals.css";
+import { AlertProvider } from "@/app/contexts/AlertContext";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,7 +17,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </header>
           <main className="flex-grow container mx-auto px-4 py-6">
-            {children}
+            <AlertProvider>{children}</AlertProvider>
           </main>
           <nav className="bg-white border-t sticky bottom-0 z-10">
             <div className="container mx-auto px-4 py-2">

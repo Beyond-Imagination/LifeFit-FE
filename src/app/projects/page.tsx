@@ -1,34 +1,66 @@
+"use client";
+
 import Link from "next/link";
 import { Calendar, ThumbsUp, MessageCircle } from "lucide-react";
-
-const projects = [
-  {
-    id: 1,
-    title: "2023년 생활체육 지원 사업",
-    date: "2023-06-01",
-    likes: 15,
-    comments: 5,
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 2,
-    title: "청소년 스포츠 활동 지원 프로그램",
-    date: "2023-06-15",
-    likes: 23,
-    comments: 8,
-    image: "/placeholder.svg?height=200&width=300",
-  },
-  {
-    id: 3,
-    title: "지역 스포츠 클럽 육성 사업",
-    date: "2023-07-01",
-    likes: 18,
-    comments: 3,
-    image: "/placeholder.svg?height=200&width=300",
-  },
-];
+import {
+  getProjectList,
+  projectLike,
+  ProjectListElementResponse,
+} from "@/app/api/projectAPI";
+import { useEffect, useState } from "react";
+import { useAlert } from "@/app/contexts/AlertContext";
 
 export default function ProjectsPage() {
+  const [lastId, setLastId] = useState<string | null>(null);
+  const [projects, setProjects] = useState<ProjectListElementResponse[]>([]);
+  const { showAlert } = useAlert();
+
+  useEffect(() => {
+    if (projects.length === 0) {
+      getProjectList(null, 10).then((response) => {
+        setProjects(response.data);
+        setLastId(response.data[response.data.length - 1].id);
+      });
+    }
+
+    let scrollHandler = () => {
+      if (
+        window.scrollY + document.documentElement.clientHeight >
+        document.documentElement.scrollHeight - 300
+      ) {
+        getProjectList(lastId, 10).then((response) => {
+          if (response.data.length < 10) {
+            window.removeEventListener("scroll", scrollHandler);
+          }
+          setProjects((prev) => [...prev, ...response.data]);
+          setLastId(response.data[response.data.length - 1].id);
+        });
+      }
+    };
+    window.addEventListener("scroll", scrollHandler);
+  }, []);
+
+  function handleLike(projectId: string) {
+    projectLike(projectId)
+      .then((response) => {
+        if (response.data.isLiked) {
+          showAlert("좋아요를 눌렀습니다.", "success");
+        } else {
+          showAlert("좋아요를 취소했습니다.", "success");
+        }
+        projects.forEach((project) => {
+          if (project.id === projectId) {
+            project.likes = response.data.likesCount;
+            project.isLiked = response.data.isLiked;
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        showAlert("좋아요를 누르지 못했습니다.", "error");
+      });
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6 text-center">
@@ -57,7 +89,10 @@ export default function ProjectsPage() {
                 <span>{project.date}</span>
               </div>
               <div className="flex justify-between text-gray-600">
-                <div className="flex items-center">
+                <div
+                  className={`flex items-center ${project?.isLiked ? "text-pink-600 hover:text-pink-700" : ""}`}
+                  onClick={() => handleLike(project.id)}
+                >
                   <ThumbsUp className="w-4 h-4 mr-1" />
                   <span>{project.likes}</span>
                 </div>
