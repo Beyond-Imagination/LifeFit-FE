@@ -1,0 +1,23 @@
+.userInfo-container{
+    display: flex;
+    flex-direction: column;
+    align-items: item-start;
+    justify-content: center;
+}
+.userinfo-box{
+    justify-content: column;
+}
+button{
+    width: 98%;
+    background-color: #E1E3E8;
+    border-radius: 20px;
+    height: 30px;
+}
+.btn-box{
+    display: flex;
+    justify-content: center;
+}
+
+.userinfo-box > p{
+    margin-bottom: 10px;
+}
