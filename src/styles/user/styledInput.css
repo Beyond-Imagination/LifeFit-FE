@@ -1,19 +1,20 @@
-.input-box{
-    display: flex;
-    flex-direction: column;
-    width: 400px;
+.input-box {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
 }
-p{
-    margin-top: 10px;
-    margin-bottom: 5px;
+p {
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
-input{
-    border: 1px solid #dfdfdf;    
-    height: 45px;
-    border-radius: 10px;
-    padding: 10px;
+input {
+  border: 1px solid #dfdfdf;
+  height: 45px;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 input:focus {
-    border: 2px solid var(--color-primary);
-    outline: none;
+  border: 2px solid var(--color-primary);
+  outline: none;
 }

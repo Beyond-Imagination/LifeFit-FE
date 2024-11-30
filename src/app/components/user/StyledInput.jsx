@@ -1,12 +1,21 @@
-import '@/styles/user/styledInput.css';
+import "@/styles/user/StyledInputUpdate.css";
 
-export default function UserInput({ name,type }) {
-    return (
-      <>
-      <div className="input-box" >
-      <p>{name}</p>
-      <input type={type}/>
-      </div>
-      </>
-    );
-  }
+export default function StyledInput({
+  name,
+  type = "text",
+  value,
+  onChange,
+  readOnly,
+}) {
+  return (
+    <div className="input-box">
+      <label>{name}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        readOnly={readOnly}
+      />
+    </div>
+  );
+}
