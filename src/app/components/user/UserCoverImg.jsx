@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { getUserImg, uploadUserImg } from "@/app/api/user/userAPI";
-import "@/styles/user/userImg.css";
+import "@/styles/user/userCoverImg.css";
 
 const HOST = process.env.NEXT_PUBLIC_API_SERVER_HOST;
 const PORT = process.env.NEXT_PUBLIC_API_SERVER_PORT;
 const BASE_URL = `${HOST}:${PORT}`;
 
-export default function UserImg({ userId }) {
+export default function UserCoverImg({ userId }) {
   // const [userId, setUserId] = useState(params.userId);
   const [userImg, setUserImg] = useState(null);
 
@@ -61,28 +61,9 @@ export default function UserImg({ userId }) {
 
   return (
     <>
-      <div className="userImg-container">
-        <div className="userImg-box">
+      <div className="userCoverImg-container">
+        <div className="userCoverImg-box">
           {userImg ? <img src={userImg} alt="User Image" /> : <p>Loading...</p>}
-          <div className="camera-box">
-            <input
-              type="file"
-              id="fileInput"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=photo_camera"
-            />
-            <span
-              className="material-symbols-outlined camera-icon"
-              onClick={handleIconClick}
-            >
-              photo_camera
-            </span>
-          </div>
         </div>
       </div>
     </>

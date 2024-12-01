@@ -15,8 +15,8 @@ export default function LoginPage() {
     try {
       const data = await login(email, password);
       const token = data.token;
-      localStorage.setItem("token", token);
-      localStorage.setItem("nickname", data.user.nickname);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("nickname", data.user.nickname);
       router.push("/");
     } catch (error) {
       console.error("Login failed:", error);

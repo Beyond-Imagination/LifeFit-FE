@@ -18,20 +18,6 @@ export default function UserInfo(props) {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const userId = payload.id;
-
-      if (userId) {
-        router.push(`/profile/${userId}`);
-      } else {
-        router.push("/login");
-      }
-    } else {
-      router.push("/login");
-    }
-
     const fetchUserInfo = async () => {
       try {
         const userData = await getUserInfo(userId);
@@ -71,7 +57,7 @@ export default function UserInfo(props) {
       setConfirmNewPassword("");
       setShowSuccessMessage(true);
       setTimeout(() => setShowSuccessMessage(false), 2000);
-      localStorage.setItem("nickname", data.nickname);
+      sessionStorage.setItem("nickname", data.nickname);
     } catch (error) {
       console.error("Failed to update user info:", error);
     }

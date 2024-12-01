@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -20,11 +20,12 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 export const login = async (email, password) => {
   console.log("login 요청");
+  console.log(BASE_URL);
   const response = await axios.post(BASE_URL + "/login", {
     email: email,
     password: password,
@@ -42,8 +43,8 @@ export const register = async (email, password, nickname) => {
 };
 
 export const logout = async () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("nickname");
+  sessionStorage.removeItem("token");
+  sessionStorage.removeItem("nickname");
   window.location.href = "/";
 };
 
@@ -66,5 +67,54 @@ export const updateUserInfo = async (updateUserInfo, userId) => {
 
 export const deleteUser = async (userId) => {
   const response = await axiosInstance.delete(BASE_URL + `/users/${userId}`);
+  return response.data;
+};
+
+export const getUserImg = async (userId) => {
+  const response = await axiosInstance.get(BASE_URL + `/users/${userId}/img`);
+  return response.data;
+};
+
+export const updateUserImg = async (userId) => {
+  const response = await axiosInstance.put(BASE_URL + `/users/${userId}/img`, {
+    img: img,
+  });
+
+  return response.data;
+  // const imgPath = response.data.profileImage;
+  // imgPath = imgPath.replace(/\\\\/g, "/");
+  // const imgUrl = `${BASE_URL}/${imgPath}`;
+  // return imgUrl;
+};
+
+export const uploadUserImg = async (userId, formData) => {
+  // const formData = new FormData();
+  // formData.append("image", img);
+
+  console.log("API - uploadUserImg", BASE_URL + `/users/${userId}/img`);
+
+  const response = await axios.put(
+    BASE_URL + `/users/${userId}/img`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return response.data;
+};
+
+export const projectLike = async (userId) => {
+  const response = await axiosInstance.get(BASE_URL + `/users/${userId}/like`);
+  return response.data;
+};
+
+export const projectComment = async (userId) => {
+  const response = await axiosInstance.get(
+    BASE_URL + `/users/${userId}/comments`
+  );
   return response.data;
 };
