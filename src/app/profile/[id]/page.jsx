@@ -1,8 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
+// import { UserCoverImg } from "@/app/components/user/UserCoverImg";
 import UserCoverImg from "@/app/components/user/UserCoverImg";
 import UserInfo from "@/app/components/user/UserInfo";
 import UserImg from "@/app/components/user/UserImg";
+
+import LikeProject from "@/app/components/activity/LikeProject";
+import CommentProject from "@/app/components/activity/CommentProject";
+import LikeCommunity from "@/app/components/activity/LikeCommunity";
+import CommentCommunity from "@/app/components/activity/CommentCommunity";
 
 import { logout, deleteUser } from "@/app/api/user/userAPI";
 
@@ -38,6 +44,18 @@ export default function ProfilePage(props) {
       {userId && <UserInfo userId={userId} />}
 
       {/* 활동내역 */}
+      {/* 관심있는 정부 공고 */}
+      {userId && <LikeProject userId={userId} />}
+
+      {/* 관심있는 정부 공고 */}
+      {userId && <CommentProject userId={userId} />}
+
+      {/* 관심있는 정부 공고 */}
+      {userId && <LikeCommunity userId={userId} />}
+
+      {/* 관심있는 정부 공고 */}
+      {userId && <CommentCommunity userId={userId} />}
+
       <br />
       <p style={{ fontSize: "25px", fontWeight: "bold" }}>활동내역</p>
 

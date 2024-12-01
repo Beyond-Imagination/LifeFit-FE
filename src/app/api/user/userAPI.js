@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 export const login = async (email, password) => {
@@ -104,5 +104,17 @@ export const uploadUserImg = async (userId, formData) => {
     }
   );
 
+  return response.data;
+};
+
+export const projectLike = async (userId) => {
+  const response = await axiosInstance.get(BASE_URL + `/users/${userId}/like`);
+  return response.data;
+};
+
+export const projectComment = async (userId) => {
+  const response = await axiosInstance.get(
+    BASE_URL + `/users/${userId}/comments`
+  );
   return response.data;
 };
