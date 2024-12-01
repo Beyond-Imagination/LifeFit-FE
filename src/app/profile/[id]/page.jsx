@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import UserCoverImg from "@/app/components/user/UserCoverImg";
 import UserInfo from "@/app/components/user/UserInfo";
 import UserImg from "@/app/components/user/UserImg";
 
@@ -29,6 +30,7 @@ export default function ProfilePage(props) {
   return (
     <div style={{ width: "60%", margin: "0 auto" }}>
       {/* 이미지 컴포넌트 */}
+      {userId && <UserCoverImg userId={userId} />}
       {/* <UserImg userId={userId} /> */}
       {userId && <UserImg userId={userId} />}
       {/* 사용자 정보 */}
