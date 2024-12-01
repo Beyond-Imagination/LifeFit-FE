@@ -1,4 +1,4 @@
-import "../../../styles/user/userImg.css";
+import "@/styles/user/userImg.css";
 
 export default function UserImg({ userId }) {
   const tempUser = {

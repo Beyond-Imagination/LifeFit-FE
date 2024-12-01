@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "../../../styles/user/userInfo.css";
+import "@/styles/user/userInfo.css";
 import { getUserInfo, updateUserInfo } from "@/app/api/user/userAPI";
 import { useRouter } from "next/navigation";
 
@@ -63,7 +63,7 @@ export default function UserInfo(props) {
           password: newPassword,
           nickname: nickname,
         },
-        userId,
+        userId
       );
       setUser(data);
       setPassword("");

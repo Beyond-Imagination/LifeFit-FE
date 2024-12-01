@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import StyledInput from "@/app/components/user/StyledInput";
-import "../../../styles/user/input-form.css";
+import "@/styles/user/input-form.css";
 import { login } from "@/app/api/user/userAPI";
 
 export default function LoginPage() {
