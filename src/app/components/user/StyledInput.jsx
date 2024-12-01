@@ -1,4 +1,4 @@
-import "@/styles/user/StyledInput.css";
+import "@/styles/user/styledInput.css";
 
 export default function StyledInput({
   name,

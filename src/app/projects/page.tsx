@@ -9,17 +9,32 @@ import {
 } from "@/app/api/projectAPI";
 import { useEffect, useState } from "react";
 import { useAlert } from "@/app/contexts/AlertContext";
+import { useRouter } from "next/navigation";
 
 export default function ProjectsPage() {
+  const router = useRouter();
   const [lastId, setLastId] = useState<string | null>(null);
   const [projects, setProjects] = useState<ProjectListElementResponse[]>([]);
   const { showAlert } = useAlert();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const userId = payload.id;
+
+      if (!userId) {
+        router.push("/login");
+        return;
+      }
+    } else {
+      router.push("/login");
+      return;
+    }
     if (projects.length === 0) {
       getProjectList(null, 10).then((response) => {
         setProjects(response.data);
-        setLastId(response.data[response.data.length - 1].id);
+        setLastId(response.data[response.data.length - 1]?.id);
       });
     }
 
@@ -33,12 +48,12 @@ export default function ProjectsPage() {
             window.removeEventListener("scroll", scrollHandler);
           }
           setProjects((prev) => [...prev, ...response.data]);
-          setLastId(response.data[response.data.length - 1].id);
+          setLastId(response.data[response.data.length - 1]?.id);
         });
       }
     };
     window.addEventListener("scroll", scrollHandler);
-  }, []);
+  }, [router]);
 
   function handleLike(projectId: string) {
     projectLike(projectId)
