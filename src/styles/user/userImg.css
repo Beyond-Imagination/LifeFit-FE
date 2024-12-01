@@ -1,19 +1,37 @@
-.userImg-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
+.userImg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* background-color: aqua; */
 }
-
-img{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+.userImg-box {
+  position: relative;
 }
-.userImg-container > p{
-    justify-content: center;
-    font-weight: bold;
-    margin: 10px 0;
-    font-size: larger;
+.camera-box {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.camera-icon {
+  color: azure;
+  width: 24px;
+  height: 24px;
+}
+img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.userImg-container > p {
+  justify-content: center;
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: larger;
 }

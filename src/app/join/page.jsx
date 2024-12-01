@@ -23,11 +23,11 @@ export default function JoinPage() {
       router.push("/login");
     } catch (error) {
       console.error("Login failed:", error);
-      if (error.response.data.error.includes("email")) {
-        alert("이미 가입된 이메일입니다.");
-      } else if (error.response.data.error.includes("nickname")) {
-        alert("이미 사용 중인 닉네임입니다.");
-      }
+      // if (error.response.data.error.includes("email")) {
+      //   alert("이미 가입된 이메일입니다.");
+      // } else if (error.response.data.error.includes("nickname")) {
+      //   alert("이미 사용 중인 닉네임입니다.");
+      // }
     }
   };
 
