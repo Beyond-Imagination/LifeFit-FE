@@ -63,7 +63,7 @@ export default function UserInfo(props) {
           password: newPassword,
           nickname: nickname,
         },
-        userId
+        userId,
       );
       setUser(data);
       setPassword("");
