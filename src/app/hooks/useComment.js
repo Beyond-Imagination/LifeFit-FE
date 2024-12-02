@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react"
-import { getAllComment } from "@/app/api/commentAPI"
+import { getCommentByPostId } from "@/app/api/commentAPI"
 
-const useComment = () => {
+const useComment = (postId) => {
     const [comments, setComments] = useState([])
     useEffect(() => {
-        const fetchComment = async() => {
-            const res = await getAllComment()
-            console.log(res)
+        const fetchComment = async(postId) => {
+            const res = await getCommentByPostId(postId)
             setComments(res)
         }
-        fetchComment()
+        fetchComment(postId)
     }, [])
 
     return comments

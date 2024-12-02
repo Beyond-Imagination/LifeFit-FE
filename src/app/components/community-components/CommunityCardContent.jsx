@@ -1,9 +1,9 @@
 import useComment from "@/app/hooks/useComment"
 import useLike from "@/app/hooks/useLike"
 
-export default function CommunityCardContent() {
-    const comments = useComment()
-    const [like, likePost] = useLike()
+export default function CommunityCardContent({ post }) {
+    const comments = useComment(post._id)
+    const [like, likePost] = useLike(post.likes, post._id)
 
     return (
         <div className="p-3">

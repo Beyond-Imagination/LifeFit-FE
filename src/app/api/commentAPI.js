@@ -1,11 +1,11 @@
 import axios from "axios"
 
-const getAllComment = async() => {
-    const res = await axios.get(`https://jsonplaceholder.typicode.com/comments?_limit=5`)
-    console.log(res.data)
+const getCommentByPostId = async(postId) => {
+    const res = await axios.get(`http://localhost:8080/api/comment/${postId}`)
+    // const res = await axios.get(`https://jsonplaceholder.typicode.com/comments?_limit=5`)
     return res.data
 }
 
 export { 
-    getAllComment
+    getCommentByPostId
 }

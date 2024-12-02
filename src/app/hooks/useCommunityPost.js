@@ -3,18 +3,19 @@ import useEdgeDetector from "@/app/hooks/useEdgeDetector"
 import { getCommunityPostsByChunk } from "@/app/api/communityAPI"
 
 const useCommunityPost = () => {
-    const [limit, setLimit] = useState(10)
+    const [posts, setPosts] = useState([])
     const isEdge = useEdgeDetector()
 
     const loadPosts = async() => {
         const fetchData = async() => {
-            const newPosts = await getCommunityPostsByChunk(limit)
-            setPosts(newPosts)
-            setLimit(limit + 5)
+            const newPosts = await getCommunityPostsByChunk(isEdge, isEdge + 5)
+            setPosts(() => {
+                return [...posts, ...newPosts]
+            })
         }
         fetchData()
     }
-    const [posts, setPosts] = useState([])
+    
     useEffect(() => {
         loadPosts()
     }, [isEdge])

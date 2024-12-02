@@ -6,30 +6,19 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import useLike from "@/app/hooks/useLike"
 import useComment from "@/app/hooks/useComment"
+import CommentForm from "@/app/components/detail-components/CommentForm"
 
 const CommunityDetail = () => {
-    
-
-
-	const param = useParams(); // useParams를 여기서 호출
-
-    const [postData, setPostData] = useState();
+    const param = useParams();
+    const [postData, setPostData] = useState({})
+    const comments = useComment(param.id)
+    const [like, likePost] = useLike()
 
     useEffect(() => {
-        if (param?.id) { // param.id가 있는 경우에만 실행
-            getCommunityPostsById(param.id).then((res) => {
-                setPostData(res); // 비동기 데이터 설정
-            }).catch((err) => {
-                console.error(err); // 에러 로깅
-            });
-        }
-    }, [param]);
-
-
-    const [like, likePost] = useLike()
-    const comments = useComment()
-   
-
+        const data = getCommunityPostsById(param.id)
+        setPostData(data)
+    }, [param])
+    
     if (!postData) {
         return <div className="text-black">Loading...</div>; // 데이터 로딩 중 UI
     }
@@ -40,7 +29,7 @@ const CommunityDetail = () => {
             <div className="flex items-center mt-1">
                 <div className="rounded-full bg-gray-200 size-8 mr-2.5"></div>
                 <section className='flex justify-between flex-col'>
-                    <h3 className="text-black font-semibold text-sm">{postData.userId}</h3>
+                    <h3 className="text-black font-semibold text-sm">{postData.user}</h3>
                     <p className='text-black text-xs'>2024-11-30</p>
                 </section>
             </div>
@@ -70,10 +59,7 @@ const CommunityDetail = () => {
                 {comments.map((comment, i) => {
                     return <Comment key={i} comment={comment}/>
                 })}
-                <section className='mt-3'>
-                    <textarea className='text-xs border-gray-200 border-solid border-2 w-full h-20 p-2 text-black' placeholder='댓글을 입력하세요.'></textarea>
-                    <button className='w-16 bg-red-500 text-xs p-2 rounded-full mt-1 hover:bg-red-300'>댓글 작성</button>
-                </section>
+                <CommentForm postId={param.id}/>
             </section>
         </div>
     )
