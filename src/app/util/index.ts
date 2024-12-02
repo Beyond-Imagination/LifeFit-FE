@@ -39,12 +39,26 @@ export default async function withAxios(requestConfig: RequestConfig) {
     (error) => AxiosErrorAuthInterceptor(error),
   );
 
-  const response = await instance.request({
+  instance.interceptors.request.use(
+    (config) => {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("token");
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
+
+  return await instance.request({
     ...requestConfig,
     baseURL: BASE_URL,
     validateStatus: (status) =>
       [...(requestConfig.suppressStatusCode || [])].includes(status) ||
       status < 500,
   });
-  return response;
 }

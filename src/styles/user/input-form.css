@@ -1,0 +1,36 @@
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-box {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background-color: var(--color-primary);
+  border-radius: 10px;
+  color: white;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 400px;
+  height: 40px;
+}
+
+.bottom-box {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
