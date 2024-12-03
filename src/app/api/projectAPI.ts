@@ -3,7 +3,7 @@ import axios from "@/app/util";
 
 export const getProjectList = (
   lastId: string | null,
-  size: number
+  size: number,
 ): Promise<AxiosResponse<ProjectListElementResponse[]>> => {
   return axios({
     method: "get",
@@ -16,7 +16,7 @@ export const getProjectList = (
 };
 
 export const getProjectDetail = (
-  id: string
+  id: string,
 ): Promise<AxiosResponse<ProjectDetailResponse>> => {
   return axios({
     method: "get",
@@ -28,7 +28,7 @@ export const getProjectDetail = (
 };
 
 export const projectLike = (
-  id: string
+  id: string,
 ): Promise<AxiosResponse<ProjectLikeResponse>> => {
   return axios({
     method: "post",
@@ -41,7 +41,7 @@ export const projectLike = (
 
 export const createComment = (
   id: string,
-  content: string
+  content: string,
 ): Promise<AxiosResponse> => {
   return axios({
     method: "post",

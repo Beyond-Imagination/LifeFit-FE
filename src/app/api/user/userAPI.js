@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export const login = async (email, password) => {
@@ -101,7 +101,7 @@ export const uploadUserImg = async (userId, formData) => {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
 
   return response.data;
@@ -114,7 +114,7 @@ export const projectLike = async (userId) => {
 
 export const projectComment = async (userId) => {
   const response = await axiosInstance.get(
-    BASE_URL + `/users/${userId}/comments`
+    BASE_URL + `/users/${userId}/comments`,
   );
   return response.data;
 };

@@ -1,18 +1,15 @@
-'use client'
+"use client";
 
 import CommunityCard from "./components/community-components/CommunityCard";
-import useCommunityPost from "@/app/hooks/useCommunityPost"
-import Link from "next/link";
+import useCommunityPost from "@/app/hooks/useCommunityPost";
 
 export default function Home() {
-  const posts = useCommunityPost()
+  const posts = useCommunityPost();
 
   return (
     <div>
-      {posts?.map((post, i) => { 
-        return (
-          <CommunityCard key={i} post={post} /> 
-        )
+      {posts?.map((post, i) => {
+        return <CommunityCard key={i} post={post} />;
       })}
     </div>
   );
