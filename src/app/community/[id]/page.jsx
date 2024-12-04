@@ -7,17 +7,25 @@ import { useEffect, useState } from "react"
 import useLike from "@/app/hooks/useLike"
 import useComment from "@/app/hooks/useComment"
 import CommentForm from "@/app/components/detail-components/CommentForm"
+import Image from "next/image"
 
 const CommunityDetail = () => {
     const param = useParams();
     const [postData, setPostData] = useState({})
-    const comments = useComment(param.id)
+    const [comments, setComments] = useComment(param.id)
     const [like, likePost] = useLike()
 
     useEffect(() => {
-        const data = getCommunityPostsById(param.id)
-        setPostData(data)
+        const fetchData = async() => {
+            const data = await getCommunityPostsById(param.id)
+            setPostData(data)
+        }
+        fetchData()
     }, [param])
+
+    useEffect(() => {
+        console.log(postData)
+    }, [postData])
     
     if (!postData) {
         return <div className="text-black">Loading...</div>; // 데이터 로딩 중 UI
@@ -33,7 +41,15 @@ const CommunityDetail = () => {
                     <p className='text-black text-xs'>2024-11-30</p>
                 </section>
             </div>
-            <div className="aspect-square w-full bg-gray-200 mt-2 rounded-md"></div>
+            <div className="relative aspect-square w-full rounded-md mt-2 overflow-hidden">
+                <Image
+                    src={postData?.image}
+                    alt="image"
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="center"
+                />
+            </div>
             <p className='text-black mt-3 text-sm'>
                 {postData.body}
             </p>
@@ -59,7 +75,7 @@ const CommunityDetail = () => {
                 {comments.map((comment, i) => {
                     return <Comment key={i} comment={comment}/>
                 })}
-                <CommentForm postId={param.id}/>
+                <CommentForm postId={param.id} setComments={setComments}/>
             </section>
         </div>
     )

@@ -11,7 +11,7 @@ const useComment = (postId) => {
         fetchComment(postId)
     }, [])
 
-    return comments
+    return [comments, setComments]
 }
 
 export default useComment
