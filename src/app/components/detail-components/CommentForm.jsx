@@ -1,48 +1,54 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import axios from "axios";
+import { useState } from "react"
+import axios from "axios"
+import { getCommentByPostId } from "@/app/api/commentAPI"
 
-const CommentForm = ({ postId }) => {
-  const [formData, setFormData] = useState({
-    body: "",
-    postId: postId,
-  });
+const CommentForm = ({ postId, setComments }) => {
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+    const [formData, setFormData] = useState({
+        body: "",
+        postId: postId
+    })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    }
 
-    axios.post("http://localhost:8080/api/comment", formData);
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const fetchData = async() => {
+            await axios.post("http://localhost:8080/api/comment", formData)
+            const res = await getCommentByPostId(postId)
+            setComments(res)
+            setFormData({
+                body: "",
+                postId: postId
+            })
+        }
 
-  return (
-    <section className="mt-3">
-      <form onSubmit={handleSubmit}>
-        <textarea
-          name="body"
-          onChange={handleChange}
-          value={formData.body}
-          className="text-xs border-gray-200 border-solid border-2 w-full h-20 p-2 text-black"
-          placeholder="댓글을 입력하세요."
-          required
-        ></textarea>
-        <button
-          type="submit"
-          className="w-16 bg-red-500 text-xs p-2 rounded-full mt-1 hover:bg-red-300"
-        >
-          댓글 작성
-        </button>
-      </form>
-    </section>
-  );
-};
+        fetchData()
+    }
 
-export default CommentForm;
+    return (
+        <section className='mt-3'>
+            <form onSubmit={handleSubmit}>
+                <textarea 
+                    name="body"
+                    onChange={handleChange}
+                    value={formData.body}
+                    className='text-xs border-gray-200 border-solid border-2 w-full h-20 p-2 text-black' 
+                    placeholder='댓글을 입력하세요.'
+                    required
+                ></textarea>
+                <button type="submit" className='w-16 bg-red-500 text-xs p-2 rounded-full mt-1 hover:bg-red-300'>댓글 작성</button>
+            </form>
+        </section>
+    )
+}
+
+export default CommentForm
